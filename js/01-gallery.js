@@ -3,7 +3,7 @@ import { galleryItems } from "./gallery-items.js";
 
 const galleryContainer = document.querySelector(".js-gallery");
 const galleryMarkup = createGalleryMarkup(galleryItems);
-galleryContainer.addEventListener("click", onImageClick);
+galleryContainer.addEventListener("click", onGalleryImageClick);
 
 // 2 step - add markup to browser
 galleryContainer.insertAdjacentHTML("beforeend", galleryMarkup);
@@ -28,15 +28,15 @@ function createGalleryMarkup(gallery) {
 }
 
 // 3 step - add handler of event Click on image
-function onImageClick(evt) {
+function onGalleryImageClick(evt) {
   evt.preventDefault();
 
   if (!evt.target.classList.contains("gallery__image")) {
     return;
   }
   //
-  // const imgId = evt.target.dataset.source;
-  // const currentItem = galleryItems.find(({ original }) => original === imgId);
+  // const imgRef = evt.target.dataset.source;
+  // const currentItem = galleryItems.find(({ original }) => original === imgRef);
 
   const instance = basicLightbox.create(
     `
@@ -44,18 +44,19 @@ function onImageClick(evt) {
               <img src="${evt.target.dataset.source}">
 
           </div>
-      `
+      `,
+    {
+      onShow: () => window.addEventListener("keydown", onKeyPress),
+      onClose: () => window.removeEventListener("keydown", onKeyPress),
+    }
   );
 
   instance.show();
-
-  window.addEventListener("keydown", onKeyPress);
 
   function onKeyPress(evt) {
     console.log(evt.code);
     if (evt.code === "Escape") {
       instance.close();
-      window.removeEventListener("keydown", onKeyPress);
     }
   }
 }

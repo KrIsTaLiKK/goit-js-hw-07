@@ -1,8 +1,8 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-const galleryMarkup = createGalleryMarkup(galleryItems);
 const galleryContainer = document.querySelector(".js-gallery");
+const galleryMarkup = createGalleryMarkup(galleryItems);
 galleryContainer.insertAdjacentHTML("beforeend", galleryMarkup);
 
 function createGalleryMarkup(gallery) {
@@ -15,7 +15,6 @@ function createGalleryMarkup(gallery) {
       class="gallery__image"
       src="${preview}"
       alt="${description}"
-      title ="${description}"
     />
   </a>
     </li>`;
@@ -23,5 +22,8 @@ function createGalleryMarkup(gallery) {
     .join("");
 }
 
-const gallery = new SimpleLightbox(".js-gallery .gallery__link");
-gallery.options.captionDelay = 250;
+const gallery = new SimpleLightbox(".js-gallery .gallery__link", {
+  captionDelay: 250,
+  captionsData: "alt",
+  scrollZoom: true,
+});
