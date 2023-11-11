@@ -38,10 +38,12 @@ function onGalleryImageClick(evt) {
   // const imgRef = evt.target.dataset.source;
   // const currentItem = galleryItems.find(({ original }) => original === imgRef);
 
+  const currentImg = evt.target.dataset.source;
+
   const instance = basicLightbox.create(
     `
           <div class="modal">
-              <img src="${evt.target.dataset.source}">
+              <img src="${currentImg}">
 
           </div>
       `,
